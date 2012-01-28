@@ -101,11 +101,7 @@ class Proxy
         
         // Apppend get params to request
         if($get) {
-            if(strpos($url, '?') !== false)
-                $url .= '?';
-            else
-                $url .= '&';
-            $url .= http_build_query($get);
+            $url .= '?'.http_build_query($get);
         }
         
         curl_setopt($this->ch, CURLOPT_URL, $url);
