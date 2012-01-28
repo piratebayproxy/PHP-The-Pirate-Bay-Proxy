@@ -322,7 +322,7 @@ class Proxy
     protected function curlExecFollow($ch)
     {
         $mr = 5; 
-        if (ini_get('open_basedir') == '' && ini_get('safe_mode' == 'Off')) { 
+        if (ini_get('open_basedir') == '' && (ini_get('safe_mode') == 'Off' || ini_get('safe_mode') == '')) { 
             curl_setopt($ch, CURLOPT_FOLLOWLOCATION, $mr > 0); 
             curl_setopt($ch, CURLOPT_MAXREDIRS, $mr); 
         } else { 
@@ -347,7 +347,7 @@ class Proxy
                         $code = curl_getinfo($rch, CURLINFO_HTTP_CODE); 
                         if ($code == 301 || $code == 302) { 
                             preg_match('/Location:(.*?)\n/', $header, $matches); 
-                            $newurl = trim(array_pop($matches)); 
+                            $newurl = str_replace(' ', '%20', trim(array_pop($matches)));
                         } else { 
                             $code = 0; 
                         } 
