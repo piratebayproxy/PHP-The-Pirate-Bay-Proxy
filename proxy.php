@@ -62,6 +62,12 @@ class Proxy
      */
     protected $bannerCallback;
     
+    /**
+     * Url to proxy.php
+     * @var string 
+     */
+    protected $baseUrl;
+    
     public function __construct()
     {
         $this->ch = curl_init();
@@ -70,6 +76,9 @@ class Proxy
         @curl_setopt($this->ch, CURLOPT_FOLLOWLOCATION, true);
         curl_setopt($this->ch, CURLOPT_MAXREDIRS, 10);
         curl_setopt($this->ch, CURLOPT_USERAGENT, 'Opera/9.23 (Windows NT 5.1; U; en)');
+        
+        // URL without proxy.php
+        $this->baseUrl = substr($_SERVER['PHP_SELF'], 0, -9);
     }
     
     /**
@@ -165,7 +174,7 @@ class Proxy
                 header($name.': '.$value);
         }
         // Set page type
-        list($this->pageType) = explode(';', isset($headers['Content-Type'])?$headers['Content-type']:'text/html');
+        list($this->pageType) = explode(';', $headers['Content-Type']);
     }
     
     // Parse headers into array
@@ -292,7 +301,7 @@ class Proxy
      */
     protected function encodeUrl($url)
     {
-        return base64_encode($url);
+        return $this->baseUrl.substr($url,7);
     }    
     
     /**
@@ -302,7 +311,7 @@ class Proxy
      */
     protected function decodeUrl($url)
     {
-        return base64_decode($url);
+        return 'http://'.$url;
     }
     
     /**
