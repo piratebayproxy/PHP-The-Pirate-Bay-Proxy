@@ -311,7 +311,7 @@ class Proxy
      */
     protected function decodeUrl($url)
     {
-        return 'http://'.$url;
+        return 'http://'.str_replace(' ', '%20', $url);
     }
     
     /**
