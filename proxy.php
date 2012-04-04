@@ -165,7 +165,7 @@ class Proxy
                 header($name.': '.$value);
         }
         // Set page type
-        list($this->pageType) = explode(';', $headers['Content-Type']);
+        list($this->pageType) = explode(';', isset($headers['Content-Type'])?$headers['Content-type']:'text/html');
     }
     
     // Parse headers into array
