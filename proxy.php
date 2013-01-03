@@ -42,13 +42,13 @@ class Proxy
      * URI to add before relative urls as well as default URL
      * @var string
      */
-    protected $prefix = 'http://thepiratebay.se';
+    protected $prefix = 'http://194.71.107.80';
     
     /**
      * Array of domains whose links will be routed through the proxy
      * @var array
      */
-    protected $blockedDomains = array('thepiratebay.se');
+    protected $blockedDomains = array('194.71.107.80');
     
     /**
      * Mime type of page
@@ -102,18 +102,15 @@ class Proxy
     public function run($url, $get, $post)
     {
         // Use default
-        if(empty($url))
-            $url = $this->prefix;
-        // Decode
-        else
+  
             $url = $this->decodeUrl($url);
         
         // Apppend get params to request
         if($get) {
             $url .= '?'.http_build_query($get);
         }
-        
-        curl_setopt($this->ch, CURLOPT_URL, $url);
+
+        curl_setopt($this->ch, CURLOPT_URL, $this->prefix.'/'.$url);
         
         // set optional post params
         if($post) {
@@ -274,14 +271,7 @@ class Proxy
      */
     public function rewriteLink($url)
     {
-        // Make relative links absolute
-        if(strpos($url, '/') === 0 && strpos($url, '/', 1) !== 1) {
-            $url = $this->prefix . $url;
-        // Add http: to protocol-relative links
-        } elseif(strpos($url, '//') === 0) {
-            $url = 'http:'.$url;
-        }
-        
+     
         // Only rewrite blocked domains
         $host = parse_url($url, PHP_URL_HOST);
         foreach($this->blockedDomains as $domain) {
@@ -311,7 +301,7 @@ class Proxy
      */
     protected function decodeUrl($url)
     {
-        return 'http://'.str_replace(' ', '%20', $url);
+        return str_replace(' ', '%20', $url);
     }
     
     /**
