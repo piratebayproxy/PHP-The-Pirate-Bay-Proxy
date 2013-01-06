@@ -49,19 +49,7 @@ class Proxy
      * @var array
      */
     protected $blockedDomains = array('194.71.107.80');
-    
-    /**
-     * Mime type of page
-     * @var string
-     */
-    protected $pageType;
-    
-    /**
-     * Callback for setting a specific banner. The DOM is given as argument
-     * @var callback
-     */
-    protected $bannerCallback;
-    
+        
     /**
      * Url to proxy.php
      * @var string 
@@ -80,18 +68,7 @@ class Proxy
         // URL without proxy.php
         $this->baseUrl = substr($_SERVER['PHP_SELF'], 0, -9);
     }
-    
-    /**
-     * @see $bannerCallback
-     * @param calback $callback
-     */
-    public function setBannerCallback($callback)
-    {
-        if(!is_callable($callback))
-            throw new InvalidArgumentException('Argument should be callable');
-        $this->bannerCallback = $callback;
-    }
-    
+
     /**
      * Run
      * @param string $url
@@ -134,13 +111,6 @@ class Proxy
         // Set response headers
         $this->setResponseHeaders($header);
                
-        
-        // Rewrite links according to page type
-        if($this->pageType == 'text/html')
-            $body = $this->rewriteHtml($body);
-        elseif($this->pageType == 'text/css')
-            $body = $this->rewriteLinksInCss($body);
-        
         return $body;
     }
     
@@ -170,8 +140,6 @@ class Proxy
             else
                 header($name.': '.$value);
         }
-        // Set page type
-        list($this->pageType) = explode(';', $headers['Content-Type']);
     }
     
     // Parse headers into array
@@ -191,109 +159,7 @@ class Proxy
         }
         return $retVal;
     }
-    
-    /**
-     * Convert html for use in proxy
-     * @param string $source HTML input
-     * @return string HTML output 
-     */
-    protected function rewriteHtml($source)
-    {
-        // Use dom to easily find links
-        $dom = new DOMDocument;
-        @$dom->loadHTML($source);
-        
-        // Map field to attribute name
-        $map = array(
-            'form' =>'action',
-            'a' => 'href',
-            'img' => 'src',
-            'script' => 'src',
-            'link' => 'href'
-        );
-        
-        // Rewrite each type
-        foreach($map as $tagName => $attributeName) {
-            // Use Xpath to find all nodes
-            foreach($dom->getElementsByTagName($tagName) as $node) {
-                // Rewrite attribute accordingly
-                if($node->hasAttribute($attributeName)) {
-                    $attribute = $node->getAttributeNode($attributeName);
-                    $attribute->value = $this->rewriteLink($attribute->value);
-                }
-            }   
-        }
-        
-        // Rewrite links in <style> tag
-        foreach($dom->getElementsByTagName('style') as $node) {
-            $node->nodeValue = $this->rewriteLinksInCss($node->nodeValue);
-        }
-        
-        // Call bannerCallback to update DOM
-        if(isset($this->bannerCallback)) {
-            $callback = $this->bannerCallback;
-            $dom = $callback($dom);
-        }
-        
-        $html = $dom->saveHTML();
-        
-        // Allow this ajax call to be routed trough the proxy as well
-        $html = str_replace("new Ajax.Updater('artistDetails', '/ajax_details_artinfo.php', {",
-                "new Ajax.Updater('artistDetails', '".$this->rewriteLink('/ajax_details_artinfo.php')."', {", $html);
-        return $html;
-        
-    }
-    
-    /**
-     * Update links in (inline) css
-     * @param string $css
-     * @return string 
-     */
-    protected function rewriteLinksInCss($css)
-    {
-        // Match on url('x') in css
-        return preg_replace_callback('#url\(\'?([^\'\)]+)\'?\)#', array($this, 'rewritleLinksInCssCallback'), $css);
-    }
-    
-    /**
-     * Helper function
-     * @param array $matches
-     * @return string 
-     */
-    protected function rewritleLinksInCssCallback($matches) {
-        return "url('".$this->rewriteLink($matches[1])."')";
-    }
-    
-    /**
-     * Update url so that it routes trough the proxy
-     * @param string $url
-     * @return string 
-     */
-    public function rewriteLink($url)
-    {
-     
-        // Only rewrite blocked domains
-        $host = parse_url($url, PHP_URL_HOST);
-        foreach($this->blockedDomains as $domain) {
-            if(strpos($host, $domain) !== false) {
-                $url = $this->encodeUrl($url);
-                break;
-            }
-        }
-        
-        return htmlentities($url);
-    }
-    
-    /**
-     *
-     * @param string $url
-     * @return string 
-     */
-    protected function encodeUrl($url)
-    {
-        return $this->baseUrl.substr($url,7);
-    }    
-    
+
     /**
      *
      * @param string $url
