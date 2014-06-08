@@ -64,7 +64,10 @@ class Proxy
         @curl_setopt($this->ch, CURLOPT_FOLLOWLOCATION, true);
         curl_setopt($this->ch, CURLOPT_MAXREDIRS, 10);
         curl_setopt($this->ch, CURLOPT_USERAGENT, 'Opera/9.23 (Windows NT 5.1; U; en)');
-        
+
+        // TPB is returning a gzipped body, force uncompressed
+        curl_setopt($this->ch, CURLOPT_ENCODING, 'identity');
+
         // URL without proxy.php
         $this->baseUrl = substr($_SERVER['PHP_SELF'], 0, -9);
     }
