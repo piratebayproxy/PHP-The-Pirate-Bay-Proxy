@@ -42,13 +42,13 @@ class Proxy
      * URI to add before relative urls as well as default URL
      * @var string
      */
-    protected $prefix = 'http://194.71.107.80';
+    protected $prefix = 'https://thepiratebay.se';
     
     /**
      * Array of domains whose links will be routed through the proxy
      * @var array
      */
-    protected $blockedDomains = array('194.71.107.80');
+    protected $blockedDomains = array('https://thepiratebay.se');
         
     /**
      * Url to proxy.php
