@@ -45,12 +45,6 @@ class Proxy
     protected $prefix = 'https://thepiratebay.la';
     
     /**
-     * Array of domains whose links will be routed through the proxy
-     * @var array
-     */
-    protected $blockedDomains = array('https://thepiratebay.la');
-        
-    /**
      * Url to proxy.php
      * @var string 
      */
@@ -113,6 +107,8 @@ class Proxy
         
         // Set response headers
         $this->setResponseHeaders($header);
+        
+        $body = preg_replace('/https:..piratebay.org/', '/static', $body);
                
         return $body;
     }
