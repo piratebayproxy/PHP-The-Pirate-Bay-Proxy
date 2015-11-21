@@ -108,7 +108,7 @@ class Proxy
         // Set response headers
         $this->setResponseHeaders($header);
         
-        $body = preg_replace('/https:..piratebay.org/', '/static', $body);
+        $body = preg_replace('/..thepiratebay.la/', '', $body);
                
         return $body;
     }
