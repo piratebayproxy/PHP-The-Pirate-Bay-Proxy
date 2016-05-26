@@ -42,7 +42,7 @@ class Proxy
      * URI to add before relative urls as well as default URL
      * @var string
      */
-    protected $prefix = 'https://thepiratebay.se';
+    protected $prefix = 'https://thepiratebay.org';
     
     /**
      * Url to proxy.php
@@ -108,7 +108,7 @@ class Proxy
         // Set response headers
         $this->setResponseHeaders($header);
         
-        $body = preg_replace('/..thepiratebay.se/', '', $body);
+        $body = preg_replace('/..thepiratebay.org/', '', $body);
                
         return $body;
     }
