@@ -2,7 +2,9 @@
 
 This is a PHP proxy script for The Pirate Bay originally created by Pim de Haan for [ikwilthepiratebay.nl](http://ikwilthepiratebay.nl/).
 
-I have made some simple changes that improve the URL structure of the proxy.
+In order to function, your web host will need to support PHP and .htaccess files.
+
+This script is not as customizable as the other [https://github.com/piratebayproxy/UnblockedPiratebayClean/](UnblockedPiratebay) script, however, since it uses a .htaccess file, it allows the site to retain the original URL structure.
 
 To use it, upload proxy.php and .htaccess to your web root directory.
 
