@@ -8,4 +8,4 @@ To use it, upload proxy.php and .htaccess to your web root directory.
 
 If you are having issues, try editing the .htaccess file and removing the RewriteBase line.
 
-Once it is set up, please submit your proxy to [https://proxybay.tv/submit.html](https://proxybay.tv/submit.html)
+Once it is set up, please submit your proxy to [https://proxybay.one/submit.html](https://proxybay.one/submit.html)
