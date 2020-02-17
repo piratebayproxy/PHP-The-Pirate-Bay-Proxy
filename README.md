@@ -10,4 +10,4 @@ To use it, upload proxy.php and .htaccess to your web root directory.
 
 If you are having issues, try editing the .htaccess file and removing the RewriteBase line.
 
-Once it is set up, please submit your proxy to [https://proxybay.ltd/submit.html](https://proxybay.ltd/submit.html)
+Once it is set up, please submit your proxy to [https://proxybay.uno/submit.html](https://proxybay.uno/submit.html)
