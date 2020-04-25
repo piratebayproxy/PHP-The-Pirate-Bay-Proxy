@@ -1,3 +1,6 @@
+##Update April 25, 2020
+This script has been deprecated after the new TPB update. We suggest using our updated script [https://github.com/piratebayproxy/UnblockedPiratebayClean](here)
+
 # PHP The Pirate Bay Proxy
 
 This is a PHP proxy script for The Pirate Bay originally created by Pim de Haan for [ikwilthepiratebay.nl](http://ikwilthepiratebay.nl/).
@@ -10,4 +13,4 @@ To use it, upload proxy.php and .htaccess to your web root directory.
 
 If you are having issues, try editing the .htaccess file and removing the RewriteBase line.
 
-Once it is set up, please submit your proxy to [https://proxybay.onl/submit.html](https://proxybay.onl/submit.html)
+Once it is set up, please submit your proxy to [https://proxybay.page/submit.html](https://proxybay.page/submit.html)
