@@ -1,5 +1,5 @@
 ## Update April 25, 2020
-This script has been deprecated after the new TPB update. We suggest using our updated script [https://github.com/piratebayproxy/UnblockedPiratebayClean](here)
+This script has been deprecated after the new TPB update. We suggest using our updated script: [https://github.com/piratebayproxy/UnblockedPiratebayClean/]
 
 # PHP The Pirate Bay Proxy
 
