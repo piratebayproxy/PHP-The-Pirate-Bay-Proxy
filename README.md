@@ -13,4 +13,4 @@ To use it, upload proxy.php and .htaccess to your web root directory.
 
 If you are having issues, try editing the .htaccess file and removing the RewriteBase line.
 
-Once it is set up, please submit your proxy to [https://proxybay.ink/submit.html](https://proxybay.ink/submit.html)
+Once it is set up, please submit your proxy to [https://proxybay.earth/submit.html](https://proxybay.earth/submit.html)
